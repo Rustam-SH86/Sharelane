@@ -13,10 +13,10 @@ public class ZipCodeTest {
     public void setup(){
         WebDriverManager.chromedriver().setup();
         ChromeOptions options = new ChromeOptions();
-        options.addArguments("--incignito");
-        options.setHeadless(true);
+        options.addArguments("--incognito");
+        options.addArguments("--headless");
         browser = new ChromeDriver(options);
-        
+
     }
 
 
@@ -27,10 +27,11 @@ public class ZipCodeTest {
         browser.findElement(By.xpath("//a[@href='./register.py']")).click();
         WebElement zipCode = browser.findElement(By.cssSelector("input[name='zip_code']"));
         zipCode.sendKeys("12345");
+
         browser.findElement(By.cssSelector("input[value = 'Continue']")).click();
-        String expectedTitle = "ShareLane: Learn to Test";
-        String actualTitle = browser.getTitle();
-        Assert.assertEquals(actualTitle,expectedTitle);
+        String url = browser.getCurrentUrl();
+        Assert.assertTrue(url.contains("register.py?"));
+
 
 
     }
